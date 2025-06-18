@@ -115,7 +115,7 @@
         data: {
           datasets: [{
             data: [val, Math.max(0, max - val)],
-            backgroundColor: ['#0f830f', '#ffffff'] // ✅ เขียวเข้ม + พื้นหลังขาว
+            backgroundColor: ['#0f830f', '#ffffff']
           }]
         },
         options: {
@@ -143,12 +143,18 @@
           const name = c[0].v;
           const cs = c[1]?.v || 0;
           const sp = c[2]?.v || 0;
+
           let lc = c[3]?.v;
-          if (typeof lc === 'number') {
-            lc = convertSerialToDate(lc);
-          } else {
-            lc = lc || '-';
-          }
+          let ld1 = c[8]?.v;
+          let ld2 = c[9]?.v;
+          let ld3 = c[10]?.v;
+          let ltms = c[11]?.v;
+
+          lc = typeof lc === 'number' ? convertSerialToDate(lc) : (lc || '-');
+          ld1 = typeof ld1 === 'number' ? convertSerialToDate(ld1) : (ld1 || '-');
+          ld2 = typeof ld2 === 'number' ? convertSerialToDate(ld2) : (ld2 || '-');
+          ld3 = typeof ld3 === 'number' ? convertSerialToDate(ld3) : (ld3 || '-');
+          ltms = typeof ltms === 'number' ? convertSerialToDate(ltms) : (ltms || '-');
 
           const d1 = c[4]?.v || 0;
           const d2 = c[5]?.v || 0;
@@ -177,6 +183,7 @@
                   <div class="chart-label">${((d1 / CLEAN_TARGET_TOOLS) * 100).toFixed(1)}%</div>
                 </div>
                 <p>${Number(d1).toLocaleString()}</p>
+                <p>Last: ${ld1}</p>
               </div>
               <div class="tool">
                 <div class="tool-title">มีดซอยแถว</div>
@@ -185,6 +192,7 @@
                   <div class="chart-label">${((d2 / CLEAN_TARGET_TOOLS) * 100).toFixed(1)}%</div>
                 </div>
                 <p>${Number(d2).toLocaleString()}</p>
+                <p>Last: ${ld2}</p>
               </div>
               <div class="tool">
                 <div class="tool-title">มีดข้าง</div>
@@ -193,6 +201,7 @@
                   <div class="chart-label">${((d3 / CLEAN_TARGET_TOOLS) * 100).toFixed(1)}%</div>
                 </div>
                 <p>${Number(d3).toLocaleString()}</p>
+                <p>Last: ${ld3}</p>
               </div>
               <div class="tool">
                 <div class="tool-title">มีดหน้า</div>
@@ -200,7 +209,8 @@
                   <canvas id="tms-${idx}"></canvas>
                   <div class="chart-label">${((tms / CLEAN_TARGET_TOOLS) * 100).toFixed(1)}%</div>
                 </div>
-                <p>${tms.toLocaleString()}</p>
+                <p>${Number(tms).toLocaleString()}</p>
+                <p>Last: ${ltms}</p>
               </div>
             </div>
           `;
